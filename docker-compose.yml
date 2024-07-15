@@ -1,0 +1,38 @@
+version: '3.9'
+services:
+  app:
+    container_name: gin_golang
+    image: golang:1.22.5-alpine
+    tty: true
+    volumes:
+      - ./:/work
+    ports:
+      - 9888:${APP_PORT}
+    environment:
+      - HOST=0.0.0.0
+    working_dir: /work
+    depends_on:
+      - db
+    networks:
+      - gin_network
+    restart: always
+  db:
+    image: postgres:16-alpine
+    container_name: gin_postgres
+    volumes:
+      - ./.docker/postgres-data:/var/lib/postgresql/data
+    ports:
+      - 54388:5432
+    networks:
+      - gin_network
+    environment:
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_DB=${DB_DATABASE}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    restart: always
+volumes:
+  postgres-data:
+
+networks:
+  gin_network:
+    driver: bridge
