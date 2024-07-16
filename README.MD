@@ -38,6 +38,7 @@ In the root folder, find the .env file and change the following values
 
 ```bash
   make up
+  make installCLI
   make install
   make vendor
 ```
@@ -55,3 +56,12 @@ Production:
 ```
 
 Develop url: http://localhost:9888
+
+### 4. Migrate DB commands
+```bash
+  make migrate-up step=[number]
+  make migrate-down step=[number]
+  make migrate-new name=[migration_file_name]
+  make migrate-status
+  make migrate-force version=[version]
+```

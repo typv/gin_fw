@@ -1,8 +1,11 @@
 version: '3.9'
 services:
   app:
+    image: gin_app
+    build:
+      context: .
+      dockerfile: Dockerfile.local
     container_name: gin_golang
-    image: golang:1.22.5-alpine
     tty: true
     volumes:
       - ./:/work

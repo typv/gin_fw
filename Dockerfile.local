@@ -1,0 +1,15 @@
+FROM golang:1.22.5-alpine
+
+ARG USER_ID=1000
+ARG GROUP_ID=1000
+RUN addgroup -g ${GROUP_ID} www && \
+    adduser -D -u ${USER_ID} -G www www
+
+WORKDIR /work
+RUN chown -R www:www /work
+
+COPY --chown=www:www . .
+
+USER www
+
+CMD ["tail", "-f", "/dev/null"]
