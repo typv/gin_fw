@@ -7,7 +7,9 @@ type HomeController struct {
 }
 
 func NewHomeController() *HomeController {
-	return &HomeController{}
+	return &HomeController{
+		homeService: NewHomeService(),
+	}
 }
 
 func (ctrl *HomeController) Index(c *gin.Context) {
@@ -18,8 +20,16 @@ func (ctrl *HomeController) Index(c *gin.Context) {
 	c.JSON(200, res)
 }
 
-func (ctrl *HomeController) Test(c *gin.Context) {
-	msg := ctrl.homeService.Test()
+func (ctrl *HomeController) GetUsers(c *gin.Context) {
+	msg := ctrl.homeService.GetUsers()
+	res := gin.H{
+		"message": msg,
+	}
+	c.JSON(200, res)
+}
+
+func (ctrl *HomeController) GetDepartments(c *gin.Context) {
+	msg := ctrl.homeService.GetDepartments()
 	res := gin.H{
 		"message": msg,
 	}

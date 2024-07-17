@@ -25,7 +25,8 @@ prod:
 dev:
 	docker-compose exec app air
 
-DATABASE_URL := "postgres://postgres:secret@db:5432/gin_fw?search_path=public&sslmode=disable"
+include .env
+DATABASE_URL := "postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_DATABASE}?sslmode=${DB_SSLMODE}&timezone=${DB_TIMEZONE}"
 MIGRATIONS_PATH := src/database/migrations
 step = 1
 
@@ -42,4 +43,5 @@ migrate-force:
 	@docker-compose exec app migrate -source "file://$(MIGRATIONS_PATH)" -database $(DATABASE_URL) force $(version)
 
 migrate-status:
+	echo "$(DATABASE_URL)"
 	@docker-compose exec app migrate -source "file://$(MIGRATIONS_PATH)" -database $(DATABASE_URL) version

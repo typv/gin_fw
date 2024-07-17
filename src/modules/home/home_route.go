@@ -18,6 +18,7 @@ func (f *HomeRoute) SetupRoute(r *gin.Engine) {
 	group := r.Group("home")
 	{
 		group.GET("/", f.homeCtrl.Index)
-		group.GET("/test", f.homeCtrl.Test)
+		group.GET("/users", f.homeCtrl.GetUsers)
+		group.GET("/departments", f.homeCtrl.GetDepartments)
 	}
 }
