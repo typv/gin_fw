@@ -6,17 +6,20 @@ import (
 )
 
 type RouteFacade struct {
-	homeRoute *home.HomeRoute
+	homeCtrl *home.HomeController
 }
 
 func NewRouteFacade() *RouteFacade {
 	return &RouteFacade{
-		homeRoute: home.NewHomeRoute(),
+		homeCtrl: home.NewHomeController(),
 	}
 }
 
 func (f *RouteFacade) SetupRoutes(r *gin.Engine) {
-	f.homeRoute.SetupRoute(r)
-
-	// Setup routes for other modules
+	homeGroup := r.Group("home")
+	{
+		homeGroup.GET("/", f.homeCtrl.Index)
+		homeGroup.GET("/users", f.homeCtrl.GetUsers)
+		homeGroup.GET("/departments", f.homeCtrl.GetDepartments)
+	}
 }
