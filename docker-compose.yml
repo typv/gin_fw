@@ -17,7 +17,7 @@ services:
     depends_on:
       - db
     networks:
-      - gin_network
+      - beego_network
     restart: unless-stopped
   db:
     image: postgres:16-alpine
@@ -27,7 +27,7 @@ services:
     ports:
       - 54388:5432
     networks:
-      - gin_network
+      - beego_network
     environment:
       - POSTGRES_USER=${DB_USERNAME}
       - POSTGRES_DB=${DB_DATABASE}
@@ -37,5 +37,6 @@ volumes:
   postgres-data:
 
 networks:
-  gin_network:
+  beego_network:
     driver: bridge
+    external: true
